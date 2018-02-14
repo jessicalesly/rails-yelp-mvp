@@ -1,9 +1,36 @@
-<h1> <%= @restaurant.name %> </h1>
+<div class="container">
 
-<ul>
-  <% @restaurant.reviews.each do |review| %>
-    <li> <%= review.content %> </li>
-  <% end %>
-</ul>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <h1> <%= @restaurant.name %> </h1>
+      <p> Address : <%= @restaurant.address %> </p>
+      <p> Category : <%= @restaurant.category %> </p>
+      <p> Phone number : <%= @restaurant.phone_number %> </p>
+    </div>
+  </div>
 
-<%= link_to "Add a review", new_restaurant_review_path(@restaurant) %>
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <h3>All the reviews</h3>
+      <ul>
+        <% @restaurant.reviews.each do |review| %>
+          <li> <%= review.content %>, <%= review.rating %>/5 </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+      <h3>Add a review</h3>
+      <%= simple_form_for [@restaurant, @review] do |f| %>
+        <%= f.input :content, class:"form-group" %>
+        <%= f.input :rating, collection: (0..5).to_a, class:"form-group"%>
+        <%= f.submit "add a review", class: "btn btn-primary" %>
+      <% end %>
+      <hr>
+      <%= link_to "Go back to restaurants", restaurants_path %>
+    </div>
+  </div>
+</div>
+

@@ -4,8 +4,33 @@
   <% @restaurants.each do |restaurant| %>
     <li>
       <%= link_to restaurant.name, restaurant_path(restaurant) %>
+      <br>
+      <% sum = 0 %>
+      <% nb_of_ratings = 0 %>
+      <% restaurant.reviews.each do |review| %>
+        <% sum += review.rating %>
+        <% nb_of_ratings += 1 %>
+      <% end %>
+      <%= nb_of_ratings > 0 ? sum.fdiv(nb_of_ratings) : 0 %>
+      /5,
+      <%= nb_of_ratings %>
+      ratings
     </li>
   <% end %>
 </ul>
 
-<%= link_to "Add a restaurant", new_restaurant_path  %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-3 col-md-6">
+    <h3>Add a new restaurant</h3>
+    <%= simple_form_for [@restaurant] do |f| %>
+      <%= f.input :name, class:"form-group" %>
+      <%= f.input :address, class:"form-group" %>
+      <%= f.input :category, class:"form-group" %>
+      <%= f.submit "add a restaurant", class: "btn btn-primary" %>
+    <% end %>
+    </div>
+  </div>
+</div>
+
